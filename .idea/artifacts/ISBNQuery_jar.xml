@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ISBNQuery:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ISBNQuery_jar</output-path>
+    <root id="archive" name="ISBNQuery.jar">
+      <element id="module-output" name="ISBNQuery" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/lib/gson-2.6.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/lib/okio-1.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/lib/okhttp-3.6.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

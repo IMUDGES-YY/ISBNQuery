@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_isbnquery" default="compile.module.isbnquery">
+  <dirname property="module.isbnquery.basedir" file="${ant.file.module_isbnquery}"/>
+  
+  <property name="module.jdk.home.isbnquery" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.isbnquery" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.isbnquery" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.isbnquery" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="isbnquery.output.dir" value="${module.isbnquery.basedir}/out/production/ISBNQuery"/>
+  <property name="isbnquery.testoutput.dir" value="${module.isbnquery.basedir}/out/test/ISBNQuery"/>
+  
+  <path id="isbnquery.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="isbnquery.module.production.classpath">
+    <path refid="${module.jdk.classpath.isbnquery}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="isbnquery.runtime.production.module.classpath">
+    <pathelement location="${isbnquery.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="isbnquery.module.classpath">
+    <path refid="${module.jdk.classpath.isbnquery}"/>
+    <pathelement location="${isbnquery.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="isbnquery.runtime.module.classpath">
+    <pathelement location="${isbnquery.testoutput.dir}"/>
+    <pathelement location="${isbnquery.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.isbnquery">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.isbnquery">
+    <patternset refid="excluded.from.module.isbnquery"/>
+  </patternset>
+  
+  <path id="isbnquery.module.sourcepath">
+    <dirset dir="${module.isbnquery.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.isbnquery" depends="compile.module.isbnquery.production,compile.module.isbnquery.tests" description="Compile module ISBNQuery"/>
+  
+  <target name="compile.module.isbnquery.production" depends="register.custom.compilers" description="Compile module ISBNQuery; production classes">
+    <mkdir dir="${isbnquery.output.dir}"/>
+    <javac2 destdir="${isbnquery.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.isbnquery}/javac">
+      <compilerarg line="${compiler.args.isbnquery}"/>
+      <bootclasspath refid="isbnquery.module.bootclasspath"/>
+      <classpath refid="isbnquery.module.production.classpath"/>
+      <src refid="isbnquery.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.isbnquery"/>
+    </javac2>
+    
+    <copy todir="${isbnquery.output.dir}">
+      <fileset dir="${module.isbnquery.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.isbnquery.tests" depends="register.custom.compilers,compile.module.isbnquery.production" description="compile module ISBNQuery; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.isbnquery" description="cleanup module">
+    <delete dir="${isbnquery.output.dir}"/>
+    <delete dir="${isbnquery.testoutput.dir}"/>
+  </target>
+</project>
